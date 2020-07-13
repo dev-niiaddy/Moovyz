@@ -1,0 +1,23 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Moovyz" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="bottomNavigationStyle">@style/Theme.Moovyz.BottomNavigationView</item>
+    </style>
+
+
+    <style name="Theme.Moovyz.BottomNavigationView" parent="Widget.MaterialComponents.BottomNavigationView.PrimarySurface">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.Moovyz.BottomNavigationView</item>
+        <item name="itemIconTint">@color/bottom_nav_view_light</item>
+        <item name="itemTextColor">@color/bottom_nav_view_light</item>
+    </style>
+
+    <style name="ThemeOverlay.Moovyz.BottomNavigationView" parent="">
+        <item name="colorPrimary">@color/colorAccent</item>
+        <item name="colorOnPrimary">@color/colorPrimary</item>
+    </style>
+</resources>

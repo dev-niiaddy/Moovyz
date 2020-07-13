@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Moovyz</string>
+    <string name="explore">Explore</string>
+    <string name="binge_list">Binge List</string>
+    <string name="search">Search</string>
+    <string name="backdrop_image">Backdrop Image</string>
+    <string name="backdrop_gradient">Backdrop Gradient</string>
+    <string name="awesome_morning">Awesome Morning</string>
+    <string name="poster_image">Poster Image</string>
+    <string name="movie_tile_gradient">Movie Tile Gradient</string>
+    <string name="coming_soon">Coming soon</string>
+    <string name="in_cinemas">In Cinemas</string>
+    <string name="movies">Movies</string>
+    <string name="shows">Shows</string>
+</resources>
