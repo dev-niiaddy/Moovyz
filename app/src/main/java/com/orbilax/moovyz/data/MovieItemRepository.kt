@@ -1,11 +1,11 @@
-package com.orbilax.moovyz.repository
+package com.orbilax.moovyz.data
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.orbilax.moovyz.database.dao.DBMovieItemDao
+import com.orbilax.moovyz.db.dao.DBMovieItemDao
 import com.orbilax.moovyz.model.MovieItem
-import com.orbilax.moovyz.service.TMDBService
+import com.orbilax.moovyz.api.TMDBService
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

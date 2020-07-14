@@ -1,7 +1,7 @@
-package com.orbilax.moovyz.database.entities
+package com.orbilax.moovyz.db.entities
 
 import androidx.room.*
-import com.orbilax.moovyz.database.converters.GenreIdsConverter
+import com.orbilax.moovyz.db.converters.GenreIdsConverter
 import com.orbilax.moovyz.model.MovieItem
 
 @Entity(tableName = "movie_item")

@@ -1,10 +1,10 @@
-package com.orbilax.moovyz.database.dao
+package com.orbilax.moovyz.db.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.orbilax.moovyz.database.entities.DBMovieItem
+import com.orbilax.moovyz.db.entities.DBMovieItem
 
 @Dao
 interface DBMovieItemDao {

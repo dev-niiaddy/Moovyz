@@ -4,13 +4,12 @@ import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.orbilax.moovyz.service.TMDBService
 
 //val <T> T.exhaustive: T
 //    get() = this
 
 // MARK: - ImageView
-fun ImageView.loadImage(url: String) {
+fun ImageView.loadNetworkImage(url: String) {
     Glide.with(this.context)
         .load(url)
         .into(this)

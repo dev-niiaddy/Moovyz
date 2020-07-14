@@ -12,9 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.orbilax.moovyz.R
-import com.orbilax.moovyz.adapters.MovieItemAdapter
-import com.orbilax.moovyz.adapters.StaggeredMovieItemAdapter
-import com.orbilax.moovyz.custom.VisibleCardZoomLayout
+import com.orbilax.moovyz.remove.adapters.MovieItemAdapter
+import com.orbilax.moovyz.remove.adapters.StaggeredMovieItemAdapter
+import com.orbilax.moovyz.remove.custom.VisibleCardZoomLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_movies.*
 import kotlinx.coroutines.flow.collectLatest

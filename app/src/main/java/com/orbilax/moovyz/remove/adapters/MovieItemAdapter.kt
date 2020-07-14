@@ -1,4 +1,4 @@
-package com.orbilax.moovyz.adapters
+package com.orbilax.moovyz.remove.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,27 +10,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.orbilax.moovyz.R
 import com.orbilax.moovyz.model.MovieItem
-import com.orbilax.moovyz.service.TMDBService
-import com.orbilax.moovyz.util.loadImage
+import com.orbilax.moovyz.api.TMDBService
+import com.orbilax.moovyz.util.loadNetworkImage
 import kotlinx.android.synthetic.main.card_fixed_movie_item.view.*
-import kotlin.random.Random
 
-class StaggeredMovieItemAdapter :
-    PagingDataAdapter<MovieItem, StaggeredMovieItemAdapter.StaggeredMovieViewHolder>(
-        MOVIE_ITEM_COMPARATOR
-    ) {
+class MovieItemAdapter :
+    PagingDataAdapter<MovieItem, MovieItemAdapter.MovieItemViewHolder>(MOVIE_ITEM_COMPARATOR) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StaggeredMovieViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieItemViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.card_staggered_movie_item, parent, false)
+            .inflate(R.layout.card_fixed_movie_item, parent, false)
 
-        view.layoutParams.height = Random.nextInt(300, 501)
-
-        return StaggeredMovieViewHolder(view)
+        return MovieItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: StaggeredMovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MovieItemViewHolder, position: Int) {
         val movieItem = getItem(position)
         holder.bindMovieItem(movieItem)
     }
@@ -47,18 +42,27 @@ class StaggeredMovieItemAdapter :
         }
     }
 
-    class StaggeredMovieViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-
+    class MovieItemViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         fun bindMovieItem(movieItem: MovieItem?) {
-            if (movieItem != null) {
+            if(movieItem != null) {
                 movieItem.posterPath?.let {
                     view.moviePosterImageView
-                        .loadImage(TMDBService.tmdbImageUrl(it))
+                        .loadNetworkImage(TMDBService.tmdbImageUrl(it))
                 }
 
                 view.movieTitle.text = movieItem.title
+                animateCard()
             }
+        }
+
+        private fun animateCard() {
+            view.translationX = 200f
+            val springAnim = SpringAnimation(view, SpringAnimation.TRANSLATION_X, 0f).apply {
+                spring.dampingRatio = SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY
+                spring.stiffness = SpringForce.STIFFNESS_LOW
+            }
+            springAnim.animateToFinalPosition(0f)
         }
     }
 }

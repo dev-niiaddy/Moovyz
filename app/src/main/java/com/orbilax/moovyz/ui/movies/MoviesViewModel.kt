@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.orbilax.moovyz.model.MovieItem
-import com.orbilax.moovyz.repository.MovieItemRepository
+import com.orbilax.moovyz.data.MovieItemRepository
 import kotlinx.coroutines.flow.Flow
 
 class MoviesViewModel @ViewModelInject constructor(

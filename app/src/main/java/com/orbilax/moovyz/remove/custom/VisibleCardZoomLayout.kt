@@ -1,4 +1,4 @@
-package com.orbilax.moovyz.custom
+package com.orbilax.moovyz.remove.custom
 
 import android.content.Context
 import android.view.View

@@ -1,4 +1,4 @@
-package com.orbilax.moovyz.repository
+package com.orbilax.moovyz.data
 
 import androidx.paging.PagingSource
 import com.orbilax.moovyz.model.MovieItem

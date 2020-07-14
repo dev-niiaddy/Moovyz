@@ -1,9 +1,9 @@
-package com.orbilax.moovyz
+package com.orbilax.moovyz.di
 
 import android.app.Application
-import com.orbilax.moovyz.database.MoovyzDatabase
-import com.orbilax.moovyz.database.dao.DBMovieItemDao
-import com.orbilax.moovyz.service.TMDBService
+import com.orbilax.moovyz.db.MoovyzDatabase
+import com.orbilax.moovyz.db.dao.DBMovieItemDao
+import com.orbilax.moovyz.api.TMDBService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

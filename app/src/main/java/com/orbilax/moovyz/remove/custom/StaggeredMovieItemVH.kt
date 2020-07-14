@@ -1,10 +1,10 @@
-package com.orbilax.moovyz.custom
+package com.orbilax.moovyz.remove.custom
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.orbilax.moovyz.model.MovieItem
-import com.orbilax.moovyz.service.TMDBService
-import com.orbilax.moovyz.util.loadImage
+import com.orbilax.moovyz.api.TMDBService
+import com.orbilax.moovyz.util.loadNetworkImage
 import kotlinx.android.synthetic.main.card_fixed_movie_item.view.*
 import kotlin.random.Random
 
@@ -21,7 +21,7 @@ class StaggeredMovieItemVH(private val view: View) : RecyclerView.ViewHolder(vie
     private fun bindMovieItem(movieItem: MovieItem) {
         movieItem.posterPath?.let {
             view.moviePosterImageView
-                .loadImage(TMDBService.tmdbImageUrl(it))
+                .loadNetworkImage(TMDBService.tmdbImageUrl(it))
         }
 
         view.movieTitle.text = movieItem.title

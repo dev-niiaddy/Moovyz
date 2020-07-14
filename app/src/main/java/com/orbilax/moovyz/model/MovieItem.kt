@@ -2,7 +2,7 @@ package com.orbilax.moovyz.model
 
 import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
-import com.orbilax.moovyz.database.entities.DBMovieItem
+import com.orbilax.moovyz.db.entities.DBMovieItem
 
 @Entity
 data class MovieItem(

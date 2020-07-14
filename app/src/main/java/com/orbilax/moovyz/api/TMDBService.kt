@@ -1,4 +1,4 @@
-package com.orbilax.moovyz.service
+package com.orbilax.moovyz.api
 
 import com.orbilax.moovyz.model.TMDBConfig
 import com.orbilax.moovyz.util.MoviePage
@@ -48,7 +48,9 @@ interface TMDBService {
                     val initialUrl = initialRequest.url()
 
                     val newUrl = initialUrl.newBuilder()
-                        .addQueryParameter("api_key", API_KEY)
+                        .addQueryParameter("api_key",
+                            API_KEY
+                        )
                         .addQueryParameter("language", "en-US")
                         .build()
 

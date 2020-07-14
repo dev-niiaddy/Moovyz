@@ -1,4 +1,4 @@
-package com.orbilax.moovyz.custom
+package com.orbilax.moovyz.remove.custom
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

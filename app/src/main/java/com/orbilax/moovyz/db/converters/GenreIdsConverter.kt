@@ -1,4 +1,4 @@
-package com.orbilax.moovyz.database.converters
+package com.orbilax.moovyz.db.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
