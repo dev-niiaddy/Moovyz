@@ -9,7 +9,13 @@
         android:id="@+id/moviesFragment"
         android:name="com.orbilax.moovyz.ui.movies.MoviesFragment"
         android:label="MoviesFragment"
-        tools:layout="@layout/fragment_movies" />
+        tools:layout="@layout/listable_view" >
+        <action
+            android:id="@+id/movies_to_view_all_fragment"
+            app:destination="@id/viewAllFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit" />
+    </fragment>
 
     <fragment
         android:id="@+id/showsFragment"
@@ -28,5 +34,14 @@
         android:name="com.orbilax.moovyz.ui.bingelist.BingeListFragment"
         android:label="BingeListFragment"
         tools:layout="@layout/fragment_binge_list" />
+    <fragment
+        android:id="@+id/viewAllFragment"
+        android:name="com.orbilax.moovyz.ui.viewall.ViewAllFragment"
+        android:label="ViewAllFragment"
+        tools:layout="@layout/fragment_view_all">
+        <argument
+            android:name="movieGrouping"
+            app:argType="com.orbilax.moovyz.ui.viewall.MovieGroupingEnum" />
+    </fragment>
 
 </navigation>

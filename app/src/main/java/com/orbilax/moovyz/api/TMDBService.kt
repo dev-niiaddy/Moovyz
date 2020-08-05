@@ -20,7 +20,17 @@ interface TMDBService {
     ): MoviePage
 
     @GET("movie/now_playing")
-    suspend fun getInCinemas(
+    suspend fun getNowPlaying(
+        @Query("page") pageNo: Int
+    ): MoviePage
+
+    @GET("movie/top_rated")
+    suspend fun getTopRated(
+        @Query("page") pageNo: Int
+    ): MoviePage
+
+    @GET("movie/popular")
+    suspend fun getPopular(
         @Query("page") pageNo: Int
     ): MoviePage
 

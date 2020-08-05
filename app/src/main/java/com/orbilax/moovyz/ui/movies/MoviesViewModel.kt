@@ -1,27 +1,59 @@
 package com.orbilax.moovyz.ui.movies
 
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import com.orbilax.moovyz.model.MovieItem
+import androidx.lifecycle.liveData
 import com.orbilax.moovyz.data.MovieItemRepository
-import kotlinx.coroutines.flow.Flow
+import com.orbilax.moovyz.util.DataResult
+import com.orbilax.moovyz.util.MoviePage
+import kotlinx.coroutines.Dispatchers
 
 class MoviesViewModel @ViewModelInject constructor(
     private val repository: MovieItemRepository
 ): ViewModel() {
 
-    val comingSoonResult: Flow<PagingData<MovieItem>> = repository
-        .getComingSoon()
-        .cachedIn(viewModelScope)
+    val comingSoonPageResult: LiveData<DataResult<MoviePage>> = liveData(Dispatchers.IO) {
+        emit(DataResult.InProgress)
+        try {
+            val data = repository.getComingSoonPage()
+            emit(DataResult.Success(data))
+        } catch (e: Exception) {
+            emit(DataResult.Error(e))
+            e.printStackTrace()
+        }
+    }
 
-    val inCinemasResult: Flow<PagingData<MovieItem>> = repository
-        .getInCinemas()
-        .cachedIn(viewModelScope)
+    val nowPlayingPageResult: LiveData<DataResult<MoviePage>> = liveData(Dispatchers.IO) {
+        emit(DataResult.InProgress)
+        try {
+            val data = repository.getNowPlaying()
+            emit(DataResult.Success(data))
+        } catch (e: Exception) {
+            emit(DataResult.Error(e))
+            e.printStackTrace()
+        }
+    }
 
-    val exploreMovieResults: Flow<PagingData<MovieItem>> = repository
-        .getExploreMovies()
-        .cachedIn(viewModelScope)
+    val topRatedPageResults: LiveData<DataResult<MoviePage>> = liveData(Dispatchers.IO) {
+        emit(DataResult.InProgress)
+        try {
+            val data = repository.getTopRatedPage()
+            emit(DataResult.Success(data))
+        } catch (e: Exception) {
+            emit(DataResult.Error(e))
+            e.printStackTrace()
+        }
+    }
+
+    val popularPageResult: LiveData<DataResult<MoviePage>> = liveData(Dispatchers.IO) {
+        emit(DataResult.InProgress)
+        try {
+            val data = repository.getPopularPage()
+            emit(DataResult.Success(data))
+        } catch (e: Exception) {
+            emit(DataResult.Error(e))
+            e.printStackTrace()
+        }
+    }
 }

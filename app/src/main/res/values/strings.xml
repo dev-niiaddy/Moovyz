@@ -12,4 +12,8 @@
     <string name="in_cinemas">In Cinemas</string>
     <string name="movies">Movies</string>
     <string name="shows">Shows</string>
+    <string name="view_all">VIEW ALL</string>
+    <string name="now_playing">Now Playing</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="popular">Popular</string>
 </resources>

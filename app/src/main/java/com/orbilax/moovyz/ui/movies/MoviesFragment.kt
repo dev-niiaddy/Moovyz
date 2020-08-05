@@ -1,90 +1,161 @@
 package com.orbilax.moovyz.ui.movies
 
-import android.animation.ObjectAnimator
-import android.animation.ValueAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.billkainkoom.ogya.quicklist.ListableAdapter
+import com.billkainkoom.ogya.quicklist.ListableHelper
+import com.billkainkoom.ogya.quicklist.ListableType
 import com.orbilax.moovyz.R
-import com.orbilax.moovyz.remove.adapters.MovieItemAdapter
-import com.orbilax.moovyz.remove.adapters.StaggeredMovieItemAdapter
-import com.orbilax.moovyz.remove.custom.VisibleCardZoomLayout
+import com.orbilax.moovyz.databinding.MoviesTitledSectionBinding
+import com.orbilax.moovyz.ui.viewall.MovieGroupingEnum
+import com.orbilax.moovyz.util.DataResult
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_movies.*
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.listable_view.*
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
 
     private val moviesViewModel by viewModels<MoviesViewModel>()
 
+    private lateinit var moviesPageListable: MutableList<MovieSectionListable>
+
+    private lateinit var listableAdapter: ListableAdapter<MovieSectionListable>
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movies, container, false)
+        return inflater.inflate(R.layout.listable_view, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ObjectAnimator.ofFloat(arrowUpImageView, View.TRANSLATION_Y, -5f).apply {
-            repeatCount = ValueAnimator.INFINITE
-            duration = 3000L
-            interpolator = CycleInterpolator(5f)
-        }.start()
+        moviesPageListable = mutableListOf()
+        listableAdapter = ListableHelper.loadList(
+            context = requireContext(),
+            recyclerView = listableRecyclerView,
+            listables = moviesPageListable,
+            listableType = ListableType(R.layout.movies_titled_section),
+            listableBindingListener = { listable, listableBinding, position ->
+                MovieSectionComponent.render(
+                    listableBinding as MoviesTitledSectionBinding,
+                    listable
+                )
+            }
+        )
 
+        initNowPlaying()
         initComingSoon()
-        initInCinemas()
-        initExplore()
+        initTopRated()
+        initPopular()
     }
+
+    private fun initNowPlaying() {
+
+        moviesViewModel.nowPlayingPageResult.observe(
+            this.viewLifecycleOwner, Observer { pageResult ->
+                when (pageResult) {
+                    is DataResult.Success -> {
+                        val movieListable = MovieSectionListable(
+                            pageResult.data,
+                            onViewAllClicked = {
+                                navigateToViewAll(MovieGroupingEnum.NOW_PLAYING)
+                            },
+                            headerTitle = getString(R.string.now_playing),
+                            isLargeCard = true,
+                            isZooming = true
+                        )
+                        moviesPageListable.add(movieListable)
+                        listableAdapter.submitList(moviesPageListable.toMutableList())
+                    }
+                }
+            })
+    }
+
 
     private fun initComingSoon() {
-        comingSoonRecyclerView.layoutManager = VisibleCardZoomLayout(requireContext())
+        moviesViewModel.comingSoonPageResult.observe(
+            this.viewLifecycleOwner,
+            Observer { pageResult ->
 
-        val adapter = MovieItemAdapter()
-        comingSoonRecyclerView.adapter = adapter
-
-        lifecycleScope.launch {
-            moviesViewModel.comingSoonResult.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
-            }
-        }
+                when (pageResult) {
+                    is DataResult.InProgress -> {
+                    }
+                    is DataResult.Success -> {
+                        val movieListable = MovieSectionListable(
+                            pageResult.data,
+                            onViewAllClicked = {
+                                navigateToViewAll(MovieGroupingEnum.COMING_SOON)
+                            },
+                            headerTitle = getString(R.string.coming_soon)
+                        )
+                        moviesPageListable.add(movieListable)
+                        listableAdapter.submitList(moviesPageListable.toMutableList())
+                    }
+                    is DataResult.Error -> {}
+                }
+            })
     }
 
+    private fun initTopRated() {
+        moviesViewModel.topRatedPageResults.observe(
+                this.viewLifecycleOwner,
+        Observer { pageResult ->
 
-    private fun initInCinemas() {
-        inCinemasRecyclerView.layoutManager = VisibleCardZoomLayout(requireContext())
-
-        val adapter = MovieItemAdapter()
-        inCinemasRecyclerView.adapter = adapter
-
-        lifecycleScope.launch {
-            moviesViewModel.inCinemasResult.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+            when (pageResult) {
+                is DataResult.InProgress -> {
+                }
+                is DataResult.Success -> {
+                    val movieListable = MovieSectionListable(
+                        pageResult.data,
+                        onViewAllClicked = {
+                            navigateToViewAll(MovieGroupingEnum.TOP_RATED)
+                        },
+                        headerTitle = getString(R.string.top_rated)
+                    )
+                    moviesPageListable.add(movieListable)
+                    listableAdapter.submitList(moviesPageListable.toMutableList())
+                }
+                is DataResult.Error -> {}
             }
-        }
+        })
     }
 
-    private fun initExplore() {
-        exploreRecyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+    private fun initPopular() {
+        moviesViewModel.popularPageResult.observe(
+                this.viewLifecycleOwner,
+        Observer { pageResult ->
 
-        val adapter = StaggeredMovieItemAdapter()
-        exploreRecyclerView.adapter = adapter
-
-        lifecycleScope.launch {
-            moviesViewModel.exploreMovieResults.collectLatest { pagingData ->
-                adapter.submitData(pagingData)
+            when (pageResult) {
+                is DataResult.InProgress -> {
+                }
+                is DataResult.Success -> {
+                    val movieListable = MovieSectionListable(
+                        pageResult.data,
+                        onViewAllClicked = {
+                            navigateToViewAll(MovieGroupingEnum.POPULAR)
+                        },
+                        headerTitle = getString(R.string.popular)
+                    )
+                    moviesPageListable.add(movieListable)
+                    listableAdapter.submitList(moviesPageListable.toMutableList())
+                }
+                is DataResult.Error -> {}
             }
-        }
+        })
+    }
+
+    private fun navigateToViewAll(movieGroupingEnum: MovieGroupingEnum) {
+        val action = MoviesFragmentDirections
+            .moviesToViewAllFragment(movieGroupingEnum)
+        findNavController().navigate(action)
     }
 }

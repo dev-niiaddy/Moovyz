@@ -1,4 +1,4 @@
-package com.orbilax.moovyz.remove.custom
+package com.orbilax.moovyz.custom
 
 import android.content.Context
 import android.view.View
@@ -32,7 +32,7 @@ class VisibleCardZoomLayout(
         for (i in 0 until childCount) {
             val child = getChildAt(i) as View
             val d = min(d1, abs(midpoint - (getDecoratedRight(child) + getDecoratedLeft(child)) / 2f))
-            val scale = (1.15f - (mShrinkAmount * (d / d1)))
+            val scale = (1.08f - (mShrinkAmount * (d / d1)))
             child.scaleX = scale
             child.scaleY = scale
         }

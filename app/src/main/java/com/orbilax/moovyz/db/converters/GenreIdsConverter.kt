@@ -2,7 +2,7 @@ package com.orbilax.moovyz.db.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.orbilax.moovyz.util.fromJson
+import com.orbilax.moovyz.extentsions.fromJson
 
 class GenreIdsConverter {
 
